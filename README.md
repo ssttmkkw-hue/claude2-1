@@ -11,7 +11,27 @@
 - **开演**：从当前句开始播放，再点一次暂停。
 - **段子台本**：点任意一句，从那里开演。每句标了 铺垫 / 包袱 / 回扣，以及预期笑声强度。
 - **表情库**：24 个表情的缩略图，点击即可预览。
-- **配音**：使用浏览器自带的中文语音（Web Speech API）。系统没有中文语音时自动改为字幕模式。
+- **配音**：播放预先合成好的录音 `voice/NN.mp3`，嘴型跟着录音的音量开合。录音加载失败时退回浏览器语音（Web Speech API），再不行就只显示字幕。
+
+## 在微信里播放
+
+微信内置浏览器（安卓 XWeb/X5、iOS WKWebView）基本不支持 `speechSynthesis`，所以每句台词都提前合成成了 MP3，页面里用 `<audio>` 播放：
+
+- 点「开演」时，页面在这次点击里先静音播一下 `<audio>` 来解锁。iOS 和微信只允许点击过的音频元素在之后自动播放下一句。笑声用的 `AudioContext` 也在同一次点击里 `resume()`。
+- 页面监听 `WeixinJSBridgeReady`，提前 `load()` 音频。
+- 切到后台时自动暂停。
+- 需要通过 HTTP(S) 打开，例如 GitHub Pages。直接双击本地文件时，`fetch` 读不到 `voice/voice.json`，会退回浏览器语音或字幕模式。
+
+修改台本后重新生成录音：
+
+```sh
+pip install sherpa-onnx numpy   # 另需 ffmpeg 和 node
+curl -LO https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kokoro-multi-lang-v1_0.tar.bz2
+tar xjf kokoro-multi-lang-v1_0.tar.bz2
+python3 tools/render-voice.py --model kokoro-multi-lang-v1_0
+```
+
+语音模型是 Kokoro v1.0 多语种版（Apache-2.0），音色为 `zf_xiaoxiao`（sid 47）。
 
 ## 角色设定
 
@@ -52,6 +72,8 @@ index.html      发布用页面（由 build.sh 生成）
 src/app.html    页面源码：样式、SVG 角色、表情数据、台本、演出逻辑
 build.sh        把 src/app.html 包成完整 HTML
 docs/standup.md 脱口秀台本
+voice/          每句台词的 MP3 和口型音量数据（voice.json）
+tools/render-voice.py  离线合成录音的脚本
 ```
 
 修改 `src/app.html` 后运行 `./build.sh` 重新生成 `index.html`。

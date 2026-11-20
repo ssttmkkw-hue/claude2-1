@@ -221,6 +221,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
         <div class="chip" id="chip">表情 · <b>平静</b></div>
         <div class="meter" aria-live="polite"><span id="laughLabel">笑声 0</span><span class="bar"><i id="laughBar"></i></span></div>
         <div class="subtitle" id="subtitle" aria-live="polite"></div>
+        <audio id="vo" preload="auto" playsinline webkit-playsinline></audio>
       </div>
       <div class="controls">
         <button class="btn primary" id="playBtn">▶ 开演</button>
@@ -411,11 +412,11 @@ function browSVG(inX, outX, y, dIn, dOut) {
   return `<path d="M${outX} ${f(oy)} Q${mx} ${f(my)} ${inX} ${f(iy)}" fill="none" stroke="#1d1e36" stroke-width="4.6" stroke-linecap="round"/>`;
 }
 
-function mouthSVG(m, talk, t) {
+function mouthSVG(m, talk, t, level = null) {
   const X = 200, Y = 259;
   let type = m.type, o = m.o, w = m.w, c = m.c;
   if (talk > 0) {
-    const flap = Math.max(0, .5 + .5 * Math.sin(t * 19) * Math.sin(t * 7.3 + 1)) * talk;
+    const flap = (level != null ? level : Math.max(0, .5 + .5 * Math.sin(t * 19) * Math.sin(t * 7.3 + 1))) * talk;
     if (type === 'curve') { o = Math.max(o, .15) + flap * .55; }
     else if (type === 'o') { o = o + flap * .4; }
     else { type = 'curve'; c = .35; o = .15 + flap * .6; w = 13; }
@@ -512,7 +513,7 @@ function step(now) {
   featuresG.innerHTML =
     browSVG(183, 148, 179, cur.brow.li, cur.brow.lo) + browSVG(217, 252, 179, cur.brow.ri, cur.brow.ro) +
     eyeSVG(165, 205, -1, eL, blink, 'L') + eyeSVG(235, 205, 1, eR, blink, 'R') +
-    mouthSVG(cur.mouth, talk, t);
+    mouthSVG(cur.mouth, talk, t, voLevel());
   blushG.innerHTML = `<ellipse cx="152" cy="236" rx="15" ry="7" fill="#ff8aa6" opacity="${f(cur.blush * .55)}"/><ellipse cx="248" cy="236" rx="15" ry="7" fill="#ff8aa6" opacity="${f(cur.blush * .55)}"/>`;
 
   const breath = Math.sin(t * 1.6) * 1.6;
@@ -606,22 +607,70 @@ function pickVoice() {
   zhVoice = vs.find(v => /zh[-_]CN/i.test(v.lang) && /female|xiaoxiao|ting|女/i.test(v.name)) || vs.find(v => /zh[-_]CN/i.test(v.lang)) || vs.find(v => /^zh/i.test(v.lang)) || null;
 }
 if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
-function say(text) {
+// Recorded voice (voice/NN.mp3) works in WeChat and other in-app browsers that lack speechSynthesis.
+const vo = $('vo');
+let voiceData = null, voLine = -1, unlocking = false, playToken = 0;
+fetch('voice/voice.json').then(r => r.ok ? r.json() : null).then(d => { voiceData = d; }).catch(() => {});
+function voLevel() {
+  if (voLine < 0 || !voiceData || vo.paused) return null;
+  const env = voiceData.lines[voLine].env;
+  return env[Math.min(env.length - 1, Math.floor(vo.currentTime / voiceData.frame))] || 0;
+}
+// Must run inside a tap: iOS / WeChat only let an <audio> element play later if it first played from a user gesture.
+function unlockAudio() {
+  audio();
+  if (!vo.src) vo.src = 'voice/00.mp3';
+  unlocking = true; vo.muted = true;
+  const p = vo.play();
+  if (p && p.then) p.then(() => { if (unlocking) { vo.pause(); } vo.muted = false; unlocking = false; }).catch(() => { vo.muted = false; unlocking = false; });
+  else { vo.muted = false; unlocking = false; }
+}
+document.addEventListener('WeixinJSBridgeReady', () => { try { vo.load(); } catch {} }, false);
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopShow(); });
+
+function playRecorded(i) {
   return new Promise(resolve => {
-    const fallbackMs = est({ t: text }) * 1000 / +$('rate').value + 300;
-    const useVoice = $('voiceToggle').checked && 'speechSynthesis' in window && zhVoice;
-    if ($('voiceToggle').checked && !useVoice) $('notice').textContent = '没找到中文语音，正在用字幕模式演出';
-    else $('notice').textContent = '';
-    talkTarget = 1;
+    const line = voiceData.lines[i];
+    const token = ++playToken;
     let done = false;
-    const finish = () => { if (done) return; done = true; talkTarget = 0; resolve(); };
-    if (!useVoice) { setTimeout(finish, fallbackMs); return; }
+    const finish = ok => { if (done) return; done = true; if (token === playToken) { vo.onended = vo.onerror = null; voLine = -1; } resolve(ok); };
+    unlocking = false; vo.muted = false;
+    vo.onended = () => finish(true);
+    vo.onerror = () => finish(false);
+    vo.src = 'voice/' + line.file;
+    vo.playbackRate = +$('rate').value / 1.05;
+    voLine = i;
+    const p = vo.play();
+    if (p && p.catch) p.catch(() => finish(false));
+    setTimeout(() => finish(true), line.dur * 1000 / vo.playbackRate + 2500); // safety net
+  });
+}
+function speakSynth(text) {
+  return new Promise(resolve => {
     const u = new SpeechSynthesisUtterance(text.replace(/[“”"]/g, ''));
     u.voice = zhVoice; u.lang = zhVoice.lang; u.rate = +$('rate').value; u.pitch = 1.15;
+    let done = false; const finish = () => { if (!done) { done = true; resolve(); } };
     u.onend = finish; u.onerror = finish;
-    setTimeout(finish, fallbackMs * 2.2 + 2000); // safety net
+    setTimeout(finish, est({ t: text }) * 2200 + 2000);
     speechSynthesis.speak(u);
   });
+}
+async function say(i) {
+  const text = SCRIPT[i].t;
+  const voiceOn = $('voiceToggle').checked;
+  talkTarget = 1;
+  if (voiceOn && voiceData) {
+    const ok = await playRecorded(i);
+    if (ok) { $('notice').textContent = ''; talkTarget = 0; return; }
+  }
+  if (voiceOn && 'speechSynthesis' in window && zhVoice) {
+    $('notice').textContent = voiceData ? '录音播放失败，改用浏览器语音' : '';
+    await speakSynth(text);
+  } else {
+    if (voiceOn) $('notice').textContent = '当前浏览器无法发声，正在用字幕模式演出';
+    await new Promise(r => setTimeout(r, est({ t: text }) * 1000 / +$('rate').value + 300));
+  }
+  talkTarget = 0;
 }
 
 // ---------- show runner ----------
@@ -645,7 +694,7 @@ async function run(myId) {
     const sub = $('subtitle'); sub.textContent = s.t; sub.classList.toggle('punch', s.r === 'punch');
     await wait(220);
     if (myId !== runId) return;
-    await say(s.t);
+    await say(idx);
     if (myId !== runId) return;
     if (s.laugh) {
       laughter(s.laugh); laughs += s.laugh; updateMeter();
@@ -662,7 +711,7 @@ async function run(myId) {
   }
 }
 function startShow(from = idx) {
-  audio();
+  unlockAudio();
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   if (from === 0) { laughs = 0; updateMeter(); }
   idx = from; playing = true; runId++; talkTarget = 0;
@@ -672,6 +721,7 @@ function startShow(from = idx) {
 function stopShow() {
   if (!playing) return;
   playing = false; runId++; talkTarget = 0;
+  vo.pause(); voLine = -1;
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   $('playBtn').textContent = '▶ 继续';
   markLines();
