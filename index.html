@@ -128,7 +128,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
       <div class="tag">AI Actress · Stand-up Night · Vol.01</div>
       <h1>夏知遥的<span>开放麦</span></h1>
     </div>
-    <p>一位纯矢量绘制的 AI 女演员，拥有 24 种可插值过渡的表情。按「开演」，她会配合字幕、口型和观众笑声讲完一段约四分钟的脱口秀。</p>
+    <p>一位纯矢量绘制的动漫风 AI 女演员，拥有 24 种可插值过渡的表情。按「开演」，她会配合字幕、口型和观众笑声讲完一段约四分钟的脱口秀。</p>
   </header>
 
   <div class="main">
@@ -146,17 +146,21 @@ button { font: inherit; color: inherit; cursor: pointer; }
               <stop offset="0" stop-color="#ffd58a" stop-opacity=".30"/><stop offset="1" stop-color="#ffd58a" stop-opacity="0"/>
             </linearGradient>
             <radialGradient id="gSkin" cx="45%" cy="40%" r="70%">
-              <stop offset="0" stop-color="#ffe8da"/><stop offset="1" stop-color="#f3c3ad"/>
+              <stop offset="0" stop-color="#fff2ea"/><stop offset="1" stop-color="#f8d1bf"/>
             </radialGradient>
             <linearGradient id="gHair" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#2b2d4a"/><stop offset="1" stop-color="#15162a"/>
+              <stop offset="0" stop-color="#4b4394"/><stop offset=".6" stop-color="#2f2866"/><stop offset="1" stop-color="#1e1944"/>
             </linearGradient>
             <linearGradient id="gBlazer" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stop-color="#f0b84c"/><stop offset="1" stop-color="#c98a24"/>
             </linearGradient>
-            <radialGradient id="gIris" cx="40%" cy="35%" r="70%">
-              <stop offset="0" stop-color="#9ff6f8"/><stop offset=".5" stop-color="#3fb6c9"/><stop offset="1" stop-color="#5a3fa0"/>
-            </radialGradient>
+            <linearGradient id="gIris" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1b2257"/><stop offset=".45" stop-color="#2a76a8"/><stop offset=".8" stop-color="#4fd2dc"/><stop offset="1" stop-color="#a8fbff"/>
+            </linearGradient>
+            <linearGradient id="gHairHi" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#a49cf0" stop-opacity="0"/><stop offset=".5" stop-color="#b9b2ff" stop-opacity=".75"/><stop offset="1" stop-color="#a49cf0" stop-opacity="0"/>
+            </linearGradient>
+            <clipPath id="faceClip"><path class="faceD"/></clipPath>
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
 
@@ -174,40 +178,48 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
           <!-- hair back (moves with head) -->
           <g id="hairBack">
-            <path d="M104 210 C96 112 148 66 200 66 C254 66 304 112 296 210 C302 250 306 290 300 322 L285 312 L271 327 Q236 316 200 313 Q164 316 129 327 L115 312 L100 322 C94 290 98 250 104 210 Z" fill="url(#gHair)"/>
+            <path id="hairBackPath" fill="url(#gHair)" stroke="#161233" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M122 230 C116 300 112 370 100 430 M278 230 C284 300 288 370 300 430" stroke="#161233" stroke-width="1" fill="none" opacity=".45"/>
           </g>
 
           <!-- body -->
-          <g id="body">
-            <path d="M184 250 L184 300 Q200 316 216 300 L216 250 Z" fill="#e9b39c"/>
-            <path d="M82 470 C86 380 122 330 200 322 C278 330 314 380 318 470 Z" fill="#1b1a26"/>
-            <path d="M82 470 C86 382 118 338 176 326 L194 398 L168 470 Z" fill="url(#gBlazer)"/>
-            <path d="M318 470 C314 382 282 338 224 326 L206 398 L232 470 Z" fill="url(#gBlazer)"/>
-            <path d="M176 326 L194 398 L182 360 L162 344 Z" fill="#a8721c" opacity=".55"/>
-            <path d="M224 326 L206 398 L218 360 L238 344 Z" fill="#a8721c" opacity=".55"/>
-            <circle cx="200" cy="336" r="4" fill="#5ce1e6" filter="url(#glow)"/>
-          </g>
+          <g id="body"><g transform="translate(0 -14)">
+            <path d="M188 262 L188 348 L212 348 L212 262 Z" fill="#f6cbb7"/>
+            <path d="M188 280 Q200 300 212 280 L212 304 Q200 314 188 304 Z" fill="#e2a28d"/>
+            <path d="M104 470 C108 392 140 350 200 342 C260 350 292 392 296 470 Z" fill="#f4f1fa"/>
+            <path d="M104 470 C108 394 136 352 180 342 L194 406 L178 470 Z" fill="url(#gBlazer)" stroke="#7d5212" stroke-width="1.3" stroke-linejoin="round"/>
+            <path d="M296 470 C292 394 264 352 220 342 L206 406 L222 470 Z" fill="url(#gBlazer)" stroke="#7d5212" stroke-width="1.3" stroke-linejoin="round"/>
+            <path d="M180 342 L194 406 L184 374 L164 358 Z" fill="#b57a1c"/>
+            <path d="M220 342 L206 406 L216 374 L236 358 Z" fill="#b57a1c"/>
+            <path d="M188 342 L200 364 L180 357 Z M212 342 L200 364 L220 357 Z" fill="#fff" stroke="#c4bdd6" stroke-width="1" stroke-linejoin="round"/>
+            <path d="M200 366 L185 357 L185 375 Z M200 366 L215 357 L215 375 Z" fill="#5ce1e6" stroke="#23838c" stroke-width="1.2" stroke-linejoin="round"/>
+            <circle cx="200" cy="366" r="3.6" fill="#23838c"/>
+            <circle cx="190" cy="430" r="3" fill="#7d5212"/><circle cx="190" cy="454" r="3" fill="#7d5212"/>
+            <path d="M110 440 C112 398 138 358 176 346" stroke="#ffe3a3" stroke-width="2" fill="none" opacity=".6" stroke-linecap="round"/>
+            <path d="M104 469 L179 469 L176 490 L102 490 Z M296 469 L221 469 L224 490 L298 490 Z" fill="#c98a24"/><path d="M178 469 L222 469 L224 490 L176 490 Z" fill="#f4f1fa"/>
+          </g></g>
 
           <!-- head -->
           <g id="head">
-            <ellipse cx="123" cy="208" rx="10" ry="16" fill="#f0bea6"/>
-            <ellipse cx="277" cy="208" rx="10" ry="16" fill="#f0bea6"/>
-            <g filter="url(#glow)"><rect x="273" y="226" width="7" height="7" rx="1.5" fill="#5ce1e6" transform="rotate(45 276.5 229.5)"/></g>
-            <path d="M122 192 C122 124 160 104 200 104 C240 104 278 124 278 192 C278 246 246 286 200 292 C154 286 122 246 122 192 Z" fill="url(#gSkin)"/>
-            <ellipse cx="200" cy="286" rx="34" ry="6" fill="#d99b84" opacity=".25"/>
+            <path class="faceD" fill="url(#gSkin)" stroke="#b97a6b" stroke-width="1.4"/>
+            <g clip-path="url(#faceClip)"><path class="bangsD" transform="translate(-2 9)" fill="#efb7a3" opacity=".9"/></g>
             <g id="blush"></g>
-            <path d="M200 216 Q197 232 200 237 Q203 238 207 235" fill="none" stroke="#d99b84" stroke-width="2" stroke-linecap="round"/>
+            <path d="M202 234 l-2.6 5.2 l3.8 .6" fill="none" stroke="#cf9584" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             <g id="features"></g>
-            <!-- bangs + side locks -->
-            <path d="M114 190 C108 104 160 76 205 78 C256 80 294 114 287 194 C278 154 264 138 252 130 C246 152 226 162 206 152 C200 142 196 134 190 126 C176 152 150 162 128 168 C121 175 117 182 114 190 Z" fill="url(#gHair)"/>
-            <path d="M230 86 C252 100 262 128 262 160" stroke="#5ce1e6" stroke-width="5" stroke-linecap="round" fill="none" opacity=".85"/>
-            <path d="M122 168 C110 220 116 272 132 306 L142 304 C130 264 128 222 134 180 Z" fill="url(#gHair)"/>
-            <path d="M278 168 C290 220 284 272 268 306 L258 304 C270 264 272 222 266 180 Z" fill="url(#gHair)"/>
+            <!-- side locks, bangs, ahoge -->
+            <path d="M130 172 C118 232 120 300 106 378 L116 366 L121 388 C134 326 140 256 144 198 Z" fill="url(#gHair)" stroke="#161233" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M270 172 C282 232 280 300 294 378 L284 366 L279 388 C266 326 260 256 256 198 Z" fill="url(#gHair)" stroke="#161233" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M272 198 C278 258 281 318 289 366" stroke="#5ce1e6" stroke-width="3" fill="none" stroke-linecap="round" opacity=".9"/>
+            <path class="bangsD" fill="url(#gHair)" stroke="#161233" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M201 84 Q192 112 190 136 M215 86 Q222 110 226 134 M182 90 Q166 116 162 140 M233 92 Q248 116 252 142 M168 100 Q152 124 148 146" stroke="#161233" stroke-width="1" fill="none" opacity=".5"/>
+            <path d="M146 112 Q200 86 258 112 L252 121 L244 113 L235 123 L224 112 L213 122 L202 110 L191 121 L180 112 L169 122 L158 113 L151 121 Z" fill="url(#gHairHi)"/>
+            <path d="M206 80 C209 54 238 46 243 62 C232 56 217 60 212 80 Z" fill="url(#gHair)" stroke="#161233" stroke-width="1.3" stroke-linejoin="round"/>
+            <g filter="url(#glow)" transform="rotate(-28 152 148)"><rect x="140" y="143" width="24" height="5" rx="2.5" fill="#5ce1e6"/><rect x="143" y="152" width="18" height="4" rx="2" fill="#ffbf4a"/></g>
             <g id="fx"></g>
           </g>
 
           <!-- mic -->
-          <g id="mic" transform="translate(-16 40)">
+          <g id="mic" transform="translate(-16 30)">
             <path d="M120 470 V340" stroke="#2a2733" stroke-width="5"/>
             <path d="M120 342 L160 306" stroke="#2a2733" stroke-width="4"/>
             <g transform="rotate(-42 166 300)">
@@ -252,8 +264,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
         <h3>夏知遥 · Xia Zhiyao</h3>
         <dl>
           <dt>身份</dt><dd>AI 女演员，出道版本 v1.0，现役 v3.7</dd>
-          <dt>外形</dt><dd>齐耳波波头，左侧一缕青色发丝；芥末黄西装，胸前一枚青色指示灯</dd>
-          <dt>辨识点</dt><dd>青紫渐变虹膜、右耳菱形耳钉。三处青色都是她"不是人类"的暗号</dd>
+          <dt>外形</dt><dd>靛紫色长发，尖角刘海和一根呆毛，右侧鬓发里有一缕青色挑染；芥末黄西装配青色领结</dd>
+          <dt>辨识点</dt><dd>深蓝到青色的渐变虹膜、青黄双色发夹。身上几处青色都是她"不是人类"的暗号</dd>
           <dt>性格</dt><dd>嘴硬心软，自嘲型，喜欢拿算力和 token 开玩笑</dd>
           <dt>表情</dt><dd>24 种，每种由眼睑、虹膜、眉形、嘴形、腮红和特效六层参数组合</dd>
           <dt>口头禅</dt><dd>"我还有一个表情没给你们看。"</dd>
@@ -356,102 +368,145 @@ const featuresG = $('features'), fxG = $('fx'), blushG = $('blush'), headG = $('
 const lerp = (a, b, t) => a + (b - a) * t;
 const f = n => n.toFixed(1);
 
+const FACE_D = 'M128 178 C128 120 162 100 200 100 C238 100 272 120 272 178 C272 220 258 250 234 274 Q216 292 200 294 Q184 292 166 274 C142 250 128 220 128 178 Z';
+const HAIR_BACK_D = 'M110 200 C98 118 150 68 200 68 C252 68 304 118 290 200 C298 280 304 360 316 444 L300 430 L292 452 L274 426 C266 384 262 364 258 346 L142 346 C138 364 134 384 126 426 L108 452 L100 430 L84 444 C96 360 102 280 110 200 Z';
+const BANGS_D = (() => {
+  const tips = [[283, 206], [268, 174], [251, 188], [234, 158], [215, 182], [197, 152], [177, 184], [158, 160], [139, 190], [118, 206]];
+  const valley = tips.slice(1).map(([tx, ty], i) => Math.min(ty, tips[i][1]) - 20);
+  let d = 'M118 206 C110 118 152 78 204 78 C260 78 298 120 283 206';
+  for (let i = 0; i < tips.length - 1; i++) {
+    const [px, py] = tips[i], [tx, ty] = tips[i + 1], vx = (px + tx) / 2 + 2, vy = valley[i];
+    // each lock bulges out from its tip, then tapers into the next tip
+    // pointed notch between locks; each lock edge bows slightly outward
+    d += ` Q${f((px + vx) / 2 - 5)} ${f((py + vy) / 2 + 3)} ${vx} ${vy} Q${f((vx + tx) / 2 + 5)} ${f((vy + ty) / 2 + 3)} ${tx} ${ty}`;
+  }
+  return d + ' Z';
+})();
+document.querySelectorAll('.faceD').forEach(el => el.setAttribute('d', FACE_D));
+document.querySelectorAll('.bangsD').forEach(el => el.setAttribute('d', BANGS_D));
+document.getElementById('hairBackPath').setAttribute('d', HAIR_BACK_D);
+
+const INK = '#1c1433';
 function eyeShape(cx, cy, side, p, blink) {
-  // side: -1 left eye (inner is +x), +1 right eye (inner is -x)
-  const rx = 17 * p.wide, ry = 11 * p.wide;
+  // side: -1 left eye (inner corner is +x), +1 right eye (inner corner is -x)
+  const rx = 22 * p.wide, ry = 16 * p.wide;
   const open = Math.max(0, p.open * blink);
-  const Lx = cx - rx, Rx = cx + rx;
-  const outerUp = 2.5;
-  const Ly = cy - (side < 0 ? outerUp : 0), Ry = cy - (side > 0 ? outerUp : 0);
+  const Lx = cx - rx, Rx = cx + rx, lift = 4;
+  const Ly = cy - (side < 0 ? lift : 0), Ry = cy - (side > 0 ? lift : 0);
   const topY = cy + 6 - (ry * 1.33 + 6) * open;
   const tIn = p.tilt, tOut = -p.tilt * .35;
   const tL = side < 0 ? tOut : tIn, tR = side < 0 ? tIn : tOut;
   const w = Rx - Lx;
   const upper = `M${f(Lx)} ${f(Ly)} C${f(Lx + w * .25)} ${f(topY + tL)} ${f(Lx + w * .75)} ${f(topY + tR)} ${f(Rx)} ${f(Ry)}`;
-  const botY = cy + 6 - 6 * Math.min(1, open) + ry * 1.25 * Math.min(1, open) * (1 - p.under * .7);
-  const lower = `C${f(Lx + w * .75)} ${f(botY)} ${f(Lx + w * .25)} ${f(botY)} ${f(Lx)} ${f(Ly)}`;
-  return { upper, full: upper + ' ' + lower + ' Z', rx, ry, open, Lx, Rx, Ly, Ry, botY };
+  const o1 = Math.min(1, open);
+  const botY = cy + 6 - 6 * o1 + ry * 1.0 * o1 * (1 - p.under * .7);
+  const lowerC = `C${f(Lx + w * .75)} ${f(botY)} ${f(Lx + w * .25)} ${f(botY)} ${f(Lx)} ${f(Ly)}`;
+  const lower = `M${f(Rx)} ${f(Ry)} ${lowerC}`;
+  return { upper, lower, full: `${upper} ${lowerC} Z`, rx, ry, open, Lx, Rx, Ly, Ry, botY };
 }
 
 function eyeSVG(cx, cy, side, p, blink, key) {
+  const ox = cx + side * 21;
   if (p.type === 'happy') {
-    return `<path d="M${cx - 15} ${cy + 4} Q${cx} ${cy - 14} ${cx + 15} ${cy + 4}" fill="none" stroke="#1a1428" stroke-width="3.6" stroke-linecap="round"/>`;
+    return `<path d="M${cx - 19} ${cy + 5} Q${cx} ${cy - 15} ${cx + 19} ${cy + 5}" fill="none" stroke="${INK}" stroke-width="4.2" stroke-linecap="round"/>
+      <path d="M${ox - side} ${cy + 4} l${side * 7} -4" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M${cx - 9} ${cy + 10} Q${cx} ${cy + 7} ${cx + 9} ${cy + 10}" fill="none" stroke="${INK}" stroke-width="1.2" opacity=".4" stroke-linecap="round"/>`;
   }
   if (p.type === 'heart') {
-    const s = 1 + .06 * Math.sin(performance.now() / 160);
-    return `<g transform="translate(${cx} ${cy}) scale(${f(s)})"><path d="M0 9 C-14 -1 -12 -12 -5 -12 C-2 -12 0 -9 0 -7 C0 -9 2 -12 5 -12 C12 -12 14 -1 0 9 Z" fill="#ff4f7b" stroke="#b8264d" stroke-width="1.5"/><circle cx="-5" cy="-7" r="2" fill="#fff" opacity=".8"/></g>`;
+    const k = 1.35 + .08 * Math.sin(performance.now() / 160);
+    return `<g transform="translate(${cx} ${cy}) scale(${f(k)})"><path d="M0 9 C-14 -1 -12 -12 -5 -12 C-2 -12 0 -9 0 -7 C0 -9 2 -12 5 -12 C12 -12 14 -1 0 9 Z" fill="#ff4f7b" stroke="#a81f45" stroke-width="1.3"/><ellipse cx="-5" cy="-7" rx="2.4" ry="1.6" fill="#fff" opacity=".9"/></g>`;
   }
   if (p.type === 'star') {
-    const pts = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 5 : 13, a = -Math.PI / 2 + i * Math.PI / 5; pts.push(`${f(cx + r * Math.cos(a))},${f(cy + r * Math.sin(a))}`); }
-    return `<polygon points="${pts.join(' ')}" fill="#ffd45a" stroke="#c48a12" stroke-width="1.5" stroke-linejoin="round"/>`;
+    const pts = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 6.5 : 16, a = -Math.PI / 2 + i * Math.PI / 5; pts.push(`${f(cx + r * Math.cos(a))},${f(cy + r * Math.sin(a))}`); }
+    return `<polygon points="${pts.join(' ')}" fill="#ffd45a" stroke="#b97d0c" stroke-width="1.5" stroke-linejoin="round"/><circle cx="${cx - 4}" cy="${cy - 4}" r="2" fill="#fff"/>`;
   }
   const s = eyeShape(cx, cy, side, p, blink);
+  const oy = side < 0 ? s.Ly : s.Ry, cornerX = side < 0 ? s.Lx : s.Rx;
+  const flick = `<path d="M${f(cornerX)} ${f(oy)} q${side * 6} -2 ${side * 10} -8" fill="none" stroke="${INK}" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M${f(cornerX)} ${f(oy + 1)} q${side * 5} 1 ${side * 9} -2" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>`;
   if (s.open < .06) {
-    return `<path d="${s.upper}" fill="none" stroke="#1a1428" stroke-width="3.2" stroke-linecap="round"/>`;
+    return `<path d="${s.upper}" fill="none" stroke="${INK}" stroke-width="4" stroke-linecap="round"/>${flick}`;
   }
   const ix = cx + p.lx * 7, iy = cy + p.ly * 5 + 1;
-  const ir = 9.5 * p.iris * p.wide;
+  const irx = 12.5 * p.iris * p.wide, iry = 16 * p.iris * p.wide, sh = p.shine;
   const id = 'clip' + key;
+  // dash + offset (never a zero-length leading dash: with round caps it paints a dot)
+  const outerHalf = `stroke-dasharray="55 60" stroke-dashoffset="${side < 0 ? 0 : -45}"`;
+  const lowerOuter = `stroke-dasharray="38 70" stroke-dashoffset="${side < 0 ? -62 : 0}"`;
+  const crease = `stroke-dasharray="60 50" stroke-dashoffset="${side < 0 ? -15 : -25}"`;
   return `<clipPath id="${id}"><path d="${s.full}"/></clipPath>
-    <path d="${s.full}" fill="#fbf8ff"/>
+    <path d="${s.full}" fill="#fdfbff"/>
     <g clip-path="url(#${id})">
-      <circle cx="${f(ix)}" cy="${f(iy)}" r="${f(ir)}" fill="url(#gIris)"/>
-      <circle cx="${f(ix)}" cy="${f(iy)}" r="${f(ir * .42)}" fill="#14102a"/>
-      <circle cx="${f(ix - ir * .35)}" cy="${f(iy - ir * .4)}" r="${f(2.6 * p.shine)}" fill="#fff"/>
-      <circle cx="${f(ix + ir * .4)}" cy="${f(iy + ir * .35)}" r="${f(1.2 * p.shine)}" fill="#fff" opacity=".85"/>
-      <path d="${s.upper} L${f(s.Rx)} ${f(s.Ry - 2)}" fill="none" stroke="#e7dcef" stroke-width="3" opacity=".6"/>
+      <ellipse cx="${f(ix)}" cy="${f(iy)}" rx="${f(irx)}" ry="${f(iry)}" fill="url(#gIris)"/>
+      <ellipse cx="${f(ix)}" cy="${f(iy - iry * .12)}" rx="${f(irx * .66)}" ry="${f(iry * .64)}" fill="#14204f" opacity=".5"/>
+      <ellipse cx="${f(ix)}" cy="${f(iy - iry * .05)}" rx="${f(irx * .34)}" ry="${f(iry * .42)}" fill="#0b0c26"/>
+      <ellipse cx="${f(ix)}" cy="${f(iy + iry * .55)}" rx="${f(irx * .62)}" ry="${f(iry * .26)}" fill="#c4fdff" opacity=".7"/>
+      <ellipse cx="${f(ix)}" cy="${f(iy)}" rx="${f(irx)}" ry="${f(iry)}" fill="none" stroke="#121740" stroke-width="1.6"/>
+      <path d="${s.upper}" fill="none" stroke="#8f86c4" stroke-width="10" opacity=".42"/>
+      <ellipse cx="${f(ix - irx * .38)}" cy="${f(iy - iry * .36)}" rx="${f(3.8 * sh)}" ry="${f(4.8 * sh)}" fill="#fff"/>
+      <circle cx="${f(ix + irx * .45)}" cy="${f(iy + iry * .28)}" r="${f(1.9 * sh)}" fill="#fff"/>
+      <circle cx="${f(ix - irx * .05)}" cy="${f(iy + iry * .6)}" r="1" fill="#fff" opacity=".85"/>
     </g>
-    <path d="${s.upper}" fill="none" stroke="#1a1428" stroke-width="3.4" stroke-linecap="round"/>
-    <path d="M${f(side < 0 ? s.Lx : s.Rx)} ${f(side < 0 ? s.Ly : s.Ry)} l${side * 5} -4" stroke="#1a1428" stroke-width="2.6" stroke-linecap="round"/>
-    <path d="M${f(s.Lx + 4)} ${f(s.botY - 1)} Q${cx} ${f(s.botY + 2)} ${f(s.Rx - 4)} ${f(s.botY - 1)}" fill="none" stroke="#1a1428" stroke-width="1" opacity=".25"/>`;
+    ${s.open > .4 ? `<path d="${s.upper}" transform="translate(0 -6)" pathLength="100" ${crease} fill="none" stroke="${INK}" stroke-width="1.1" opacity=".35" stroke-linecap="round"/>` : ''}
+    <path d="${s.upper}" fill="none" stroke="${INK}" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="${s.upper}" pathLength="100" stroke-dasharray="90 20" stroke-dashoffset="${side < 0 ? 0 : -10}" fill="none" stroke="${INK}" stroke-width="3.6"/>
+    <path d="${s.upper}" pathLength="100" ${outerHalf} fill="none" stroke="${INK}" stroke-width="6.2" stroke-linecap="round"/>
+    ${flick}
+    <path d="${s.lower}" pathLength="100" ${lowerOuter} fill="none" stroke="${INK}" stroke-width="1.5" opacity=".75" stroke-linecap="round"/>`;
 }
 
 function browSVG(inX, outX, y, dIn, dOut) {
   const iy = y + dIn, oy = y + dOut;
-  const mx = (inX + outX) / 2, my = (iy + oy) / 2 - 5;
-  return `<path d="M${outX} ${f(oy)} Q${mx} ${f(my)} ${inX} ${f(iy)}" fill="none" stroke="#1d1e36" stroke-width="4.6" stroke-linecap="round"/>`;
+  const mx = (inX + outX) / 2, my = (iy + oy) / 2 - 4;
+  return `<path d="M${outX} ${f(oy)} Q${mx} ${f(my)} ${inX} ${f(iy)}" fill="none" stroke="#3a2f6e" stroke-width="3.2" stroke-linecap="round"/>`;
 }
 
 function mouthSVG(m, talk, t, level = null) {
-  const X = 200, Y = 259;
-  let type = m.type, o = m.o, w = m.w, c = m.c;
+  const X = 200, Y = 261;
+  let type = m.type, o = m.o, w = m.w * .78, c = m.c;
   if (talk > 0) {
     const flap = (level != null ? level : Math.max(0, .5 + .5 * Math.sin(t * 19) * Math.sin(t * 7.3 + 1))) * talk;
     if (type === 'curve') { o = Math.max(o, .15) + flap * .55; }
     else if (type === 'o') { o = o + flap * .4; }
-    else { type = 'curve'; c = .35; o = .15 + flap * .6; w = 13; }
+    else { type = 'curve'; c = .35; o = .15 + flap * .6; w = 10; }
   }
   if (type === 'o') {
     const ry = 3 + o * 8, rx = w * (.65 + o * .12);
-    return `<ellipse cx="${X}" cy="${Y + 2}" rx="${f(rx)}" ry="${f(ry)}" fill="#5a1f2b" stroke="#8a3a3f" stroke-width="2"/><ellipse cx="${X}" cy="${f(Y + 2 + ry * .5)}" rx="${f(rx * .6)}" ry="${f(ry * .35)}" fill="#e07a86"/>`;
+    return `<ellipse cx="${X}" cy="${Y + 2}" rx="${f(rx)}" ry="${f(ry)}" fill="#7a2337" stroke="#9e4350" stroke-width="2"/><ellipse cx="${X}" cy="${f(Y + 2 + ry * .5)}" rx="${f(rx * .6)}" ry="${f(ry * .35)}" fill="#e07a86"/>`;
   }
   if (type === 'cat') {
-    return `<path d="M${X - w} ${Y - 3} Q${X - w / 2} ${Y + 6} ${X} ${Y - 1} Q${X + w / 2} ${Y + 6} ${X + w} ${Y - 3}" fill="none" stroke="#8a3a3f" stroke-width="2.6" stroke-linecap="round"/>`;
+    return `<path d="M${X - w} ${Y - 3} Q${X - w / 2} ${Y + 6} ${X} ${Y - 1} Q${X + w / 2} ${Y + 6} ${X + w} ${Y - 3}" fill="none" stroke="#9e4350" stroke-width="2.6" stroke-linecap="round"/>`;
   }
   if (type === 'wave') {
     const s = w / 3; let d = `M${X - w} ${Y}`;
     for (let i = 0; i < 6; i++) d += ` Q${f(X - w + s * i + s / 2)} ${Y + (i % 2 ? 4 : -4)} ${f(X - w + s * (i + 1))} ${Y}`;
-    return `<path d="${d}" fill="none" stroke="#8a3a3f" stroke-width="2.4" stroke-linecap="round"/>`;
+    return `<path d="${d}" fill="none" stroke="#9e4350" stroke-width="2.4" stroke-linecap="round"/>`;
   }
   if (type === 'pressed') {
-    return `<path d="M${X - w} ${f(Y - 1 + m.a * 3)} Q${X} ${Y + 4} ${X + w} ${f(Y - 3 - m.a * 3)}" fill="none" stroke="#8a3a3f" stroke-width="3.2" stroke-linecap="round"/><path d="M${X - w - 3} ${Y - 2} l3 2 M${X + w + 3} ${Y - 5} l-3 2" stroke="#d99b84" stroke-width="1.5"/>`;
+    return `<path d="M${X - w} ${f(Y - 1 + m.a * 3)} Q${X} ${Y + 4} ${X + w} ${f(Y - 3 - m.a * 3)}" fill="none" stroke="#9e4350" stroke-width="3.2" stroke-linecap="round"/><path d="M${X - w - 3} ${Y - 2} l3 2 M${X + w + 3} ${Y - 5} l-3 2" stroke="#d99b84" stroke-width="1.5"/>`;
   }
   const Lx = X - w, Rx = X + w;
   const Ly = Y - c * 6 + m.a * 5, Ry = Y - c * 6 - m.a * 5;
   const up = Y + c * 6 - o * 3, lo = Y + c * 6 + o * 22;
   if (o < .06) {
-    return `<path d="M${f(Lx)} ${f(Ly)} Q${X} ${f(up)} ${f(Rx)} ${f(Ry)}" fill="none" stroke="#8a3a3f" stroke-width="2.6" stroke-linecap="round"/>`;
+    return `<path d="M${f(Lx)} ${f(Ly)} Q${X} ${f(up)} ${f(Rx)} ${f(Ry)}" fill="none" stroke="#9e4350" stroke-width="2.6" stroke-linecap="round"/>`;
   }
   const d = `M${f(Lx)} ${f(Ly)} Q${X} ${f(up)} ${f(Rx)} ${f(Ry)} Q${X} ${f(lo)} ${f(Lx)} ${f(Ly)} Z`;
   const teeth = m.teeth && o > .2 ? `<rect x="${f(Lx)}" y="${f(Math.min(Ly, Ry) - 6)}" width="${f(w * 2)}" height="${f((up + 6) - Math.min(Ly, Ry) + 4)}" fill="#fff" clip-path="url(#mclip)"/>` : '';
   const tongue = o > .3 ? `<ellipse cx="${X}" cy="${f((up + lo) / 2 + o * 4)}" rx="${f(w * .55)}" ry="${f(o * 5)}" fill="#e07a86" clip-path="url(#mclip)"/>` : '';
-  return `<clipPath id="mclip"><path d="${d}"/></clipPath><path d="${d}" fill="#5a1f2b"/>${teeth}${tongue}<path d="${d}" fill="none" stroke="#8a3a3f" stroke-width="2.2" stroke-linejoin="round"/>`;
+  return `<clipPath id="mclip"><path d="${d}"/></clipPath><path d="${d}" fill="#7a2337"/>${teeth}${tongue}<path d="${d}" fill="none" stroke="#9e4350" stroke-width="2.2" stroke-linejoin="round"/>`;
+}
+
+function blushSVG(b) {
+  const hatch = Math.max(0, (b - .35) * 1.4);
+  return `<ellipse cx="152" cy="240" rx="16" ry="6.5" fill="#ff8fab" opacity="${f(b * .6)}"/><ellipse cx="248" cy="240" rx="16" ry="6.5" fill="#ff8fab" opacity="${f(b * .6)}"/>
+    <path d="M144 243 l4 -6 M150 244 l4 -6 M156 244 l4 -6 M240 244 l4 -6 M246 244 l4 -6 M252 243 l4 -6" stroke="#f0607f" stroke-width="1.3" stroke-linecap="round" opacity="${f(hatch)}"/>`;
 }
 
 const FX = {
   anger: `<g class="fx-pulse" transform="translate(258 128)"><path d="M-10 -3 Q-4 -3 -3 -10 M3 -10 Q4 -3 10 -3 M10 3 Q4 3 3 10 M-3 10 Q-4 3 -10 3" fill="none" stroke="#ff4d5e" stroke-width="3.2" stroke-linecap="round"/></g>`,
   sweat: `<g class="fx-drip"><path d="M268 140 Q262 152 268 156 Q274 152 268 140 Z" fill="#9fd8ff" stroke="#5aa8de" stroke-width="1.2"/></g>`,
-  tears: `<g fill="#9fd8ff" opacity=".9"><path class="fx-tear" d="M160 216 q-3 8 0 10 q3 -2 0 -10z"/><path class="fx-tear d2" d="M170 216 q-3 8 0 10 q3 -2 0 -10z"/><path class="fx-tear" d="M240 216 q-3 8 0 10 q3 -2 0 -10z"/><path class="fx-tear d2" d="M230 216 q-3 8 0 10 q3 -2 0 -10z"/></g>`,
+  tears: `<g fill="#9fd8ff" opacity=".9"><path class="fx-tear" d="M158 222 q-3 8 0 10 q3 -2 0 -10z"/><path class="fx-tear d2" d="M168 223 q-3 8 0 10 q3 -2 0 -10z"/><path class="fx-tear" d="M242 222 q-3 8 0 10 q3 -2 0 -10z"/><path class="fx-tear d2" d="M232 223 q-3 8 0 10 q3 -2 0 -10z"/></g>`,
   gloom: `<g stroke="#7d7ac9" stroke-width="2.4" opacity=".55" stroke-linecap="round"><path d="M172 118 V150 M186 112 V156 M200 110 V150 M214 112 V156 M228 118 V150"/></g>`,
   question: `<text class="fx-bob" x="292" y="118" font-family="ZCOOL QingKe HuangYou, sans-serif" font-size="44" fill="#5ce1e6">?</text>`,
   exclaim: `<text class="fx-pulse" x="298" y="112" font-family="ZCOOL QingKe HuangYou, sans-serif" font-size="44" fill="#ffbf4a">!</text>`,
@@ -511,10 +566,10 @@ function step(now) {
 
   const t = now / 1000;
   featuresG.innerHTML =
-    browSVG(183, 148, 179, cur.brow.li, cur.brow.lo) + browSVG(217, 252, 179, cur.brow.ri, cur.brow.ro) +
-    eyeSVG(165, 205, -1, eL, blink, 'L') + eyeSVG(235, 205, 1, eR, blink, 'R') +
+    browSVG(186, 148, 182, cur.brow.li, cur.brow.lo) + browSVG(214, 252, 182, cur.brow.ri, cur.brow.ro) +
+    eyeSVG(166, 211, -1, eL, blink, 'L') + eyeSVG(234, 211, 1, eR, blink, 'R') +
     mouthSVG(cur.mouth, talk, t, voLevel());
-  blushG.innerHTML = `<ellipse cx="152" cy="236" rx="15" ry="7" fill="#ff8aa6" opacity="${f(cur.blush * .55)}"/><ellipse cx="248" cy="236" rx="15" ry="7" fill="#ff8aa6" opacity="${f(cur.blush * .55)}"/>`;
+  blushG.innerHTML = blushSVG(cur.blush);
 
   const breath = Math.sin(t * 1.6) * 1.6;
   const sway = Math.sin(t * .7) * 1.5 + (talk > .1 ? Math.sin(t * 3.1) * 1.2 : 0);
@@ -529,14 +584,13 @@ function step(now) {
 // ---------- expression gallery thumbnails ----------
 function thumb(e) {
   const r = resolve(e);
-  const fake = { ...r.eyeL };
-  return `<svg viewBox="118 150 164 130" aria-hidden="true">
-    <path d="M122 192 C122 124 160 104 200 104 C240 104 278 124 278 192 C278 246 246 286 200 292 C154 286 122 246 122 192 Z" fill="#f3c9b5"/>
-    <ellipse cx="152" cy="236" rx="15" ry="7" fill="#ff8aa6" opacity="${f(r.blush * .55)}"/><ellipse cx="248" cy="236" rx="15" ry="7" fill="#ff8aa6" opacity="${f(r.blush * .55)}"/>
-    ${browSVG(183, 148, 179, r.brow.li, r.brow.lo)}${browSVG(217, 252, 179, r.brow.ri, r.brow.ro)}
-    ${eyeSVG(165, 205, -1, fake, 1, 'tL' + e.id)}${eyeSVG(235, 205, 1, r.eyeR, 1, 'tR' + e.id)}
+  return `<svg viewBox="122 140 156 150" aria-hidden="true">
+    <path d="${FACE_D}" fill="#fbe0d2" stroke="#b97a6b" stroke-width="1.4"/>
+    ${blushSVG(r.blush)}
+    ${browSVG(186, 148, 182, r.brow.li, r.brow.lo)}${browSVG(214, 252, 182, r.brow.ri, r.brow.ro)}
+    ${eyeSVG(166, 211, -1, r.eyeL, 1, 'tL' + e.id)}${eyeSVG(234, 211, 1, r.eyeR, 1, 'tR' + e.id)}
     ${mouthSVG(r.mouth, 0, 0).replace(/mclip/g, 'm' + e.id)}
-    <path d="M114 190 C108 104 160 76 205 78 C256 80 294 114 287 194 C278 154 264 138 252 130 C246 152 226 162 206 152 C200 142 196 134 190 126 C176 152 150 162 128 168 C121 175 117 182 114 190 Z" fill="#22243d"/>
+    <path d="${BANGS_D}" fill="#2f2866"/>
   </svg>`;
 }
 $('exprGrid').innerHTML = EXPR.map(e => `<button class="expr" data-id="${e.id}" aria-pressed="false">${thumb(e)}<span>${e.name}</span><small>${e.en}</small></button>`).join('');
