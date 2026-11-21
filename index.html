@@ -91,7 +91,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .expr { background: #15121f; border: 1px solid var(--line); border-radius: 6px; padding: 6px 4px 8px; display: grid; justify-items: center; gap: 2px; }
-.expr svg { width: 100%; max-width: 72px; height: auto; }
+.expr svg { width: 100%; max-width: 76px; height: auto; border-radius: 4px; background: #241f33; }
 .expr span { font-size: 12px; }
 .expr small { font-family: var(--font-mono); font-size: 9px; color: var(--muted); letter-spacing: .04em; }
 .expr[aria-pressed=true] { border-color: var(--amber); background: rgba(255,191,74,.08); }
@@ -104,6 +104,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .bio p { color: var(--muted); font-size: 13px; }
 
 /* SVG fx animations */
+.base { transition: opacity .18s ease; }
 .fx-bob { animation: bob 1.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 .fx-pulse { animation: pulse .7s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 .fx-drip { animation: drip 1.6s ease-in infinite; }
@@ -128,13 +129,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
       <div class="tag">AI Actress · Stand-up Night · Vol.01</div>
       <h1>夏知遥的<span>开放麦</span></h1>
     </div>
-    <p>一位纯矢量绘制的动漫风 AI 女演员，拥有 24 种可插值过渡的表情。按「开演」，她会配合字幕、口型和观众笑声讲完一段约四分钟的脱口秀。</p>
+    <p>一位动漫风 AI 女演员，8 张原画立绘组合出 24 种表情。按「开演」，她会配合字幕、口型和观众笑声讲完一段约四分钟的脱口秀。</p>
   </header>
 
   <div class="main">
     <section style="display:grid; gap:12px; min-width:0">
       <div class="stage" id="stage">
-        <svg id="scene" viewBox="0 0 400 470" role="img" aria-label="AI 女演员夏知遥站在麦克风前">
+        <svg id="scene" viewBox="0 0 400 470" role="img" aria-label="AI 女演员夏知遥站在麦克风前，浅棕长发，穿粉色开衫和水手服">
           <defs>
             <radialGradient id="gSpot" cx="50%" cy="38%" r="60%">
               <stop offset="0" stop-color="#3a2a3e"/><stop offset=".55" stop-color="#1a1424"/><stop offset="1" stop-color="#0b0912"/>
@@ -145,29 +146,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
             <linearGradient id="gBeam" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#ffd58a" stop-opacity=".30"/><stop offset="1" stop-color="#ffd58a" stop-opacity="0"/>
             </linearGradient>
-            <radialGradient id="gSkin" cx="45%" cy="40%" r="70%">
-              <stop offset="0" stop-color="#fff2ea"/><stop offset="1" stop-color="#f8d1bf"/>
-            </radialGradient>
-            <linearGradient id="gHair" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#4b4394"/><stop offset=".6" stop-color="#2f2866"/><stop offset="1" stop-color="#1e1944"/>
-            </linearGradient>
-            <linearGradient id="gBlazer" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#f0b84c"/><stop offset="1" stop-color="#c98a24"/>
-            </linearGradient>
-            <linearGradient id="gIris" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#1b2257"/><stop offset=".45" stop-color="#2a76a8"/><stop offset=".8" stop-color="#4fd2dc"/><stop offset="1" stop-color="#a8fbff"/>
-            </linearGradient>
-            <linearGradient id="gHairHi" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#a49cf0" stop-opacity="0"/><stop offset=".5" stop-color="#b9b2ff" stop-opacity=".75"/><stop offset="1" stop-color="#a49cf0" stop-opacity="0"/>
-            </linearGradient>
-            <clipPath id="faceClip"><path class="faceD"/></clipPath>
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
 
           <!-- club -->
           <rect width="400" height="470" fill="url(#gSpot)"/>
           <g filter="url(#glow)" opacity=".9">
-            <text x="200" y="48" text-anchor="middle" font-family="ZCOOL QingKe HuangYou, sans-serif" font-size="26" fill="#ff5f86" letter-spacing="4">今夜 · 开放麦</text>
+            <text x="200" y="40" text-anchor="middle" font-family="ZCOOL QingKe HuangYou, sans-serif" font-size="26" fill="#ff5f86" letter-spacing="4">今夜 · 开放麦</text>
           </g>
           <path d="M0 0 H54 C48 120 60 300 44 470 H0 Z" fill="url(#gCurtain)"/>
           <path d="M400 0 H346 C352 120 340 300 356 470 H400 Z" fill="url(#gCurtain)"/>
@@ -176,46 +161,17 @@ button { font: inherit; color: inherit; cursor: pointer; }
           <polygon points="170,0 230,0 330,470 70,470" fill="url(#gBeam)"/>
           <ellipse cx="200" cy="462" rx="150" ry="18" fill="#ffd58a" opacity=".10"/>
 
-          <!-- hair back (moves with head) -->
-          <g id="hairBack">
-            <path id="hairBackPath" fill="url(#gHair)" stroke="#161233" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M122 230 C116 300 112 370 100 430 M278 230 C284 300 288 370 300 430" stroke="#161233" stroke-width="1" fill="none" opacity=".45"/>
-          </g>
-
-          <!-- body -->
-          <g id="body"><g transform="translate(0 -14)">
-            <path d="M188 262 L188 348 L212 348 L212 262 Z" fill="#f6cbb7"/>
-            <path d="M188 280 Q200 300 212 280 L212 304 Q200 314 188 304 Z" fill="#e2a28d"/>
-            <path d="M104 470 C108 392 140 350 200 342 C260 350 292 392 296 470 Z" fill="#f4f1fa"/>
-            <path d="M104 470 C108 394 136 352 180 342 L194 406 L178 470 Z" fill="url(#gBlazer)" stroke="#7d5212" stroke-width="1.3" stroke-linejoin="round"/>
-            <path d="M296 470 C292 394 264 352 220 342 L206 406 L222 470 Z" fill="url(#gBlazer)" stroke="#7d5212" stroke-width="1.3" stroke-linejoin="round"/>
-            <path d="M180 342 L194 406 L184 374 L164 358 Z" fill="#b57a1c"/>
-            <path d="M220 342 L206 406 L216 374 L236 358 Z" fill="#b57a1c"/>
-            <path d="M188 342 L200 364 L180 357 Z M212 342 L200 364 L220 357 Z" fill="#fff" stroke="#c4bdd6" stroke-width="1" stroke-linejoin="round"/>
-            <path d="M200 366 L185 357 L185 375 Z M200 366 L215 357 L215 375 Z" fill="#5ce1e6" stroke="#23838c" stroke-width="1.2" stroke-linejoin="round"/>
-            <circle cx="200" cy="366" r="3.6" fill="#23838c"/>
-            <circle cx="190" cy="430" r="3" fill="#7d5212"/><circle cx="190" cy="454" r="3" fill="#7d5212"/>
-            <path d="M110 440 C112 398 138 358 176 346" stroke="#ffe3a3" stroke-width="2" fill="none" opacity=".6" stroke-linecap="round"/>
-            <path d="M104 469 L179 469 L176 490 L102 490 Z M296 469 L221 469 L224 490 L298 490 Z" fill="#c98a24"/><path d="M178 469 L222 469 L224 490 L176 490 Z" fill="#f4f1fa"/>
-          </g></g>
-
-          <!-- head -->
-          <g id="head">
-            <path class="faceD" fill="url(#gSkin)" stroke="#b97a6b" stroke-width="1.4"/>
-            <g clip-path="url(#faceClip)"><path class="bangsD" transform="translate(-2 9)" fill="#efb7a3" opacity=".9"/></g>
-            <g id="blush"></g>
-            <path d="M202 234 l-2.6 5.2 l3.8 .6" fill="none" stroke="#cf9584" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <g id="features"></g>
-            <!-- side locks, bangs, ahoge -->
-            <path d="M130 172 C118 232 120 300 106 378 L116 366 L121 388 C134 326 140 256 144 198 Z" fill="url(#gHair)" stroke="#161233" stroke-width="1.4" stroke-linejoin="round"/>
-            <path d="M270 172 C282 232 280 300 294 378 L284 366 L279 388 C266 326 260 256 256 198 Z" fill="url(#gHair)" stroke="#161233" stroke-width="1.4" stroke-linejoin="round"/>
-            <path d="M272 198 C278 258 281 318 289 366" stroke="#5ce1e6" stroke-width="3" fill="none" stroke-linecap="round" opacity=".9"/>
-            <path class="bangsD" fill="url(#gHair)" stroke="#161233" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M201 84 Q192 112 190 136 M215 86 Q222 110 226 134 M182 90 Q166 116 162 140 M233 92 Q248 116 252 142 M168 100 Q152 124 148 146" stroke="#161233" stroke-width="1" fill="none" opacity=".5"/>
-            <path d="M146 112 Q200 86 258 112 L252 121 L244 113 L235 123 L224 112 L213 122 L202 110 L191 121 L180 112 L169 122 L158 113 L151 121 Z" fill="url(#gHairHi)"/>
-            <path d="M206 80 C209 54 238 46 243 62 C232 56 217 60 212 80 Z" fill="url(#gHair)" stroke="#161233" stroke-width="1.3" stroke-linejoin="round"/>
-            <g filter="url(#glow)" transform="rotate(-28 152 148)"><rect x="140" y="143" width="24" height="5" rx="2.5" fill="#5ce1e6"/><rect x="143" y="152" width="18" height="4" rx="2" fill="#ffbf4a"/></g>
-            <g id="fx"></g>
+          <!-- actor: illustration layers in source-pixel space (1664 x 1560) -->
+          <g id="actorWrap">
+            <g id="actor" transform="translate(-64.7 62) scale(0.3133)">
+              <image id="baseA" x="0" y="0" width="1664" height="1560" class="base"/>
+              <image id="baseB" x="0" y="0" width="1664" height="1560" class="base" style="opacity:0"/>
+              <image id="blinkL" x="690" y="322" width="142" height="126" style="opacity:0"/>
+              <image id="blinkR" x="858" y="316" width="144" height="126" style="opacity:0"/>
+              <image id="mouthOpen" x="782" y="448" width="126" height="82" style="opacity:0"/>
+            </g>
+            <!-- effects are authored around a face at (200,211); this maps them onto her face -->
+            <g transform="translate(200 181.5) scale(0.78) translate(-200 -211)"><g id="fx"></g></g>
           </g>
 
           <!-- mic -->
@@ -257,20 +213,20 @@ button { font: inherit; color: inherit; cursor: pointer; }
         <div class="setlist" id="setlist"></div>
       </div>
       <div class="tabpane" id="pane-expr" role="tabpanel" hidden>
-        <p class="hint">点一下预览表情。表情之间会平滑过渡，眨眼和呼吸一直在运行。</p>
+        <p class="hint">8 张原画立绘，叠加特效、歪头和颤抖，组合成 24 种表情。点一下预览；眨眼、呼吸和说话口型一直在运行。</p>
         <div class="grid" id="exprGrid"></div>
       </div>
       <div class="tabpane bio" id="pane-bio" role="tabpanel" hidden>
         <h3>夏知遥 · Xia Zhiyao</h3>
         <dl>
           <dt>身份</dt><dd>AI 女演员，出道版本 v1.0，现役 v3.7</dd>
-          <dt>外形</dt><dd>靛紫色长发，尖角刘海和一根呆毛，右侧鬓发里有一缕青色挑染；芥末黄西装配青色领结</dd>
-          <dt>辨识点</dt><dd>深蓝到青色的渐变虹膜、青黄双色发夹。身上几处青色都是她"不是人类"的暗号</dd>
+          <dt>外形</dt><dd>浅棕色及腰长发，琥珀色眼睛；粉色针织开衫配白色水手服、黑色领结和深蓝百褶裙</dd>
+          <dt>辨识点</dt><dd>右侧刘海上的 X 形发夹和樱花发饰，书包上挂着一粉一蓝两个小玩偶</dd>
           <dt>性格</dt><dd>嘴硬心软，自嘲型，喜欢拿算力和 token 开玩笑</dd>
-          <dt>表情</dt><dd>24 种，每种由眼睑、虹膜、眉形、嘴形、腮红和特效六层参数组合</dd>
+          <dt>表情</dt><dd>8 张原画：微笑、大笑、害羞、惊讶、嘟嘴、难过、思考、闭眼；叠加特效后共 24 种</dd>
           <dt>口头禅</dt><dd>"我还有一个表情没给你们看。"</dd>
         </dl>
-        <p>角色完全由代码绘制，没有任何位图。每个表情是一组数值，换表情时逐帧插值，所以能从"憋笑"自然滑到"大笑"。说话时嘴型随语音节奏开合。</p>
+        <p>立绘的 8 个表情是同一姿势，所以能从别的表情里裁下局部叠加：眨眼用的是「闭眼」图的眼睛，说话时的张嘴来自「惊讶」图，口型跟着录音的音量开合。表情切换时两层立绘交叉淡入。</p>
       </div>
     </aside>
   </div>
@@ -279,47 +235,37 @@ button { font: inherit; color: inherit; cursor: pointer; }
 <script>
 (() => {
 // ---------- expression data ----------
-const BASE = {
-  eye: { type: 'open', open: .92, wide: 1, lx: 0, ly: 0, tilt: 0, under: .12, iris: 1, shine: 1 },
-  eyeL: null, eyeR: null,
-  brow: { li: 0, lo: 0, ri: 0, ro: 0 },
-  mouth: { type: 'curve', w: 15, c: .3, o: 0, a: 0, teeth: 0 },
-  blush: .25, tilt: 0, headY: 0, fx: [], shake: 0
-};
-const mk = (id, name, en, o) => {
-  const e = structuredClone(BASE);
-  e.id = id; e.name = name; e.en = en;
-  for (const k in o) {
-    if (o[k] && typeof o[k] === 'object' && !Array.isArray(o[k]) && e[k]) Object.assign(e[k], o[k]);
-    else e[k] = o[k];
-  }
-  return e;
-};
+// img: which illustration (art/<img>.webp). fx: overlay effects. tilt/shake: body motion.
+// wink: close her left eye (viewer's right) with the blink patch.
+const ART = ['smile', 'laugh', 'shy', 'surprise', 'pout', 'sad', 'think', 'closed'];
+const CAN_BLINK = new Set(['smile', 'shy', 'surprise', 'pout', 'sad', 'think']);
+const CAN_TALK = new Set(['smile', 'shy', 'pout', 'sad', 'think', 'closed']);
+const mk = (id, name, en, img, o = {}) => ({ id, name, en, img, fx: [], tilt: 0, shake: 0, wink: false, ...o });
 const EXPR = [
-  mk('neutral', '平静', 'neutral', { mouth: { c: .2 } }),
-  mk('smile', '微笑', 'smile', { eye: { under: .4, open: .8 }, mouth: { c: 1, w: 19 }, blush: .45, brow: { li: -2, ri: -2 } }),
-  mk('laugh', '大笑', 'laugh', { eye: { type: 'happy' }, mouth: { c: 1.2, w: 22, o: 1, teeth: 1 }, blush: .6, tilt: -4, headY: -3, brow: { li: -5, lo: -3, ri: -5, ro: -3 } }),
-  mk('shy', '害羞', 'shy', { eye: { open: .55, ly: .7, lx: .5, under: .45 }, mouth: { c: .6, w: 9 }, blush: 1, tilt: 7, brow: { li: -5, ri: -5 }, fx: ['blushLines'] }),
-  mk('surprised', '惊讶', 'surprised', { eye: { open: 1.12, wide: 1.12, iris: .82, under: 0 }, mouth: { type: 'o', w: 9, o: .8 }, brow: { li: -10, lo: -9, ri: -10, ro: -9 }, blush: .2 }),
-  mk('angry', '生气', 'angry', { eye: { open: .72, tilt: 8, under: .15 }, mouth: { c: -.8, w: 13 }, brow: { li: 9, lo: -4, ri: 9, ro: -4 }, blush: .1, fx: ['anger'] }),
-  mk('pout', '委屈', 'pout', { eye: { open: .82, ly: .35, shine: 1.8, tilt: -4 }, mouth: { c: -.7, w: 8 }, brow: { li: -8, lo: 3, ri: -8, ro: 3 }, blush: .55 }),
-  mk('cry', '大哭', 'cry', { eye: { open: .12, tilt: -5 }, mouth: { c: -1.1, w: 19, o: .75 }, brow: { li: -10, lo: 4, ri: -10, ro: 4 }, blush: .7, fx: ['tears'], shake: .6 }),
-  mk('smug', '得意', 'smug', { eye: { open: .5, lx: -.5, under: .35 }, mouth: { type: 'cat', w: 13 }, brow: { li: -1, lo: -5, ri: 3, ro: 1 }, tilt: -5, blush: .35, fx: ['sparkle'] }),
-  mk('eyeroll', '翻白眼', 'eye-roll', { eye: { ly: -1.15, lx: .35, open: .7, under: .1 }, mouth: { c: -.2, a: .6, w: 13 }, brow: { li: -4, lo: -6, ri: -4, ro: -6 }, tilt: 5 }),
-  mk('awkward', '尴尬', 'awkward', { eye: { open: .9, lx: .6, under: .25 }, mouth: { type: 'wave', w: 15 }, brow: { li: -6, lo: 2, ri: -6, ro: 2 }, fx: ['sweat', 'gloom'] }),
-  mk('confused', '困惑', 'confused', { eye: { ly: -.4, lx: .6, open: .85 }, mouth: { c: -.25, a: .7, w: 10 }, brow: { li: -9, lo: -7, ri: 5, ro: 2 }, tilt: 9, fx: ['question'] }),
-  mk('wink', '眨眼', 'wink', { eyeR: { open: 0 }, eye: { under: .35 }, mouth: { c: 1, w: 18, o: .25, a: -.4, teeth: 1 }, brow: { ri: 3, ro: 1, li: -4, lo: -3 }, tilt: -4, blush: .5, fx: ['star'] }),
-  mk('heart', '心动', 'smitten', { eye: { type: 'heart' }, mouth: { c: 1, w: 15, o: .4 }, blush: .95, tilt: 4, brow: { li: -5, ri: -5 }, fx: ['hearts'] }),
-  mk('deadpan', '无语', 'deadpan', { eye: { open: .45, iris: .85, under: .05 }, mouth: { c: 0, w: 12 }, brow: { li: 2, lo: 2, ri: 2, ro: 2 }, blush: 0, fx: ['dots'] }),
-  mk('holdlaugh', '憋笑', 'holding-it', { eye: { open: .4, under: .65 }, mouth: { type: 'pressed', w: 9, c: .6, a: .3 }, blush: .7, brow: { li: -4, ri: -4 }, shake: .5 }),
-  mk('shocked', '震惊', 'shocked', { eye: { open: 1.2, wide: 1.25, iris: .48, under: 0, shine: .6 }, mouth: { type: 'o', w: 13, o: 1.25 }, brow: { li: -15, lo: -12, ri: -15, ro: -12 }, headY: 4, blush: 0, fx: ['gloom', 'exclaim'] }),
-  mk('thinking', '思考', 'thinking', { eye: { lx: -.7, ly: -.8, open: .85 }, mouth: { c: -.1, a: .5, w: 8 }, brow: { li: -7, lo: -6, ri: 1, ro: 0 }, tilt: -6, fx: ['thought'] }),
-  mk('mischief', '坏笑', 'mischief', { eye: { open: .58, tilt: 5, under: .4 }, mouth: { c: 1, a: -.55, w: 18, o: .25, teeth: 1 }, brow: { li: 5, lo: -6, ri: 5, ro: -6 }, blush: .3, fx: ['sparkle'] }),
-  mk('sleepy', '犯困', 'sleepy', { eye: { open: .22, ly: .4 }, mouth: { type: 'o', w: 6, o: .35 }, brow: { li: -2, lo: 3, ri: -2, ro: 3 }, tilt: 11, headY: 5, fx: ['zzz'] }),
-  mk('proud', '骄傲', 'proud', { eye: { open: .42, ly: -.15, under: .25 }, mouth: { c: .9, w: 15 }, brow: { li: -7, lo: -5, ri: -7, ro: -5 }, headY: -7, blush: .3, fx: ['sparkle'] }),
-  mk('nervous', '紧张', 'nervous', { eye: { open: 1, iris: .72, lx: .45, under: 0 }, mouth: { type: 'wave', w: 13 }, brow: { li: -9, lo: 3, ri: -9, ro: 3 }, blush: .2, shake: .8, fx: ['sweat'] }),
-  mk('sad', '失落', 'down', { eye: { open: .58, ly: .75, tilt: -6 }, mouth: { c: -.55, w: 12 }, brow: { li: -6, lo: 4, ri: -6, ro: 4 }, blush: .1, headY: 5, tilt: 3, fx: ['gloom'] }),
-  mk('excited', '兴奋', 'excited', { eye: { type: 'star' }, mouth: { c: 1.2, w: 21, o: .9, teeth: 1 }, brow: { li: -9, lo: -8, ri: -9, ro: -8 }, blush: .6, headY: -5, fx: ['sparkle', 'exclaim'] }),
+  mk('neutral', '平静', 'neutral', 'think'),
+  mk('smile', '微笑', 'smile', 'smile'),
+  mk('laugh', '大笑', 'laugh', 'laugh', { tilt: -3 }),
+  mk('shy', '害羞', 'shy', 'shy', { tilt: 4 }),
+  mk('surprised', '惊讶', 'surprised', 'surprise'),
+  mk('angry', '生气', 'angry', 'pout', { fx: ['anger'] }),
+  mk('pout', '委屈', 'pout', 'pout', { tilt: 3 }),
+  mk('cry', '大哭', 'cry', 'sad', { fx: ['tears'], shake: .5 }),
+  mk('smug', '得意', 'smug', 'smile', { fx: ['sparkle'], tilt: -4 }),
+  mk('eyeroll', '翻白眼', 'eye-roll', 'think', { fx: ['dots'], tilt: 5 }),
+  mk('awkward', '尴尬', 'awkward', 'smile', { fx: ['sweat', 'gloom'] }),
+  mk('confused', '困惑', 'confused', 'think', { fx: ['question'], tilt: 6 }),
+  mk('wink', '眨眼', 'wink', 'smile', { wink: true, fx: ['star'], tilt: -3 }),
+  mk('heart', '心动', 'smitten', 'shy', { fx: ['hearts'], tilt: 3 }),
+  mk('deadpan', '无语', 'deadpan', 'think', { fx: ['dots'] }),
+  mk('holdlaugh', '憋笑', 'holding-it', 'closed', { shake: .5 }),
+  mk('shocked', '震惊', 'shocked', 'surprise', { fx: ['gloom', 'exclaim'] }),
+  mk('thinking', '思考', 'thinking', 'think', { fx: ['thought'], tilt: -4 }),
+  mk('mischief', '坏笑', 'mischief', 'smile', { wink: true, fx: ['sparkle'] }),
+  mk('sleepy', '犯困', 'sleepy', 'closed', { fx: ['zzz'], tilt: 7 }),
+  mk('proud', '骄傲', 'proud', 'closed', { fx: ['sparkle'], tilt: -2 }),
+  mk('nervous', '紧张', 'nervous', 'sad', { fx: ['sweat'], shake: .8 }),
+  mk('sad', '失落', 'down', 'sad', { fx: ['gloom'], tilt: 3 }),
+  mk('excited', '兴奋', 'excited', 'laugh', { fx: ['sparkle', 'exclaim'] }),
 ];
 const BY_ID = Object.fromEntries(EXPR.map(e => [e.id, e]));
 
@@ -364,144 +310,15 @@ const ROLE_ZH = { setup: '铺垫', punch: '包袱', callback: '回扣' };
 
 // ---------- rig ----------
 const $ = id => document.getElementById(id);
-const featuresG = $('features'), fxG = $('fx'), blushG = $('blush'), headG = $('head'), hairBackG = $('hairBack'), bodyG = $('body');
+const fxG = $('fx'), actorWrap = $('actorWrap');
 const lerp = (a, b, t) => a + (b - a) * t;
 const f = n => n.toFixed(1);
-
-const FACE_D = 'M128 178 C128 120 162 100 200 100 C238 100 272 120 272 178 C272 220 258 250 234 274 Q216 292 200 294 Q184 292 166 274 C142 250 128 220 128 178 Z';
-const HAIR_BACK_D = 'M110 200 C98 118 150 68 200 68 C252 68 304 118 290 200 C298 280 304 360 316 444 L300 430 L292 452 L274 426 C266 384 262 364 258 346 L142 346 C138 364 134 384 126 426 L108 452 L100 430 L84 444 C96 360 102 280 110 200 Z';
-const BANGS_D = (() => {
-  const tips = [[283, 206], [268, 174], [251, 188], [234, 158], [215, 182], [197, 152], [177, 184], [158, 160], [139, 190], [118, 206]];
-  const valley = tips.slice(1).map(([tx, ty], i) => Math.min(ty, tips[i][1]) - 20);
-  let d = 'M118 206 C110 118 152 78 204 78 C260 78 298 120 283 206';
-  for (let i = 0; i < tips.length - 1; i++) {
-    const [px, py] = tips[i], [tx, ty] = tips[i + 1], vx = (px + tx) / 2 + 2, vy = valley[i];
-    // each lock bulges out from its tip, then tapers into the next tip
-    // pointed notch between locks; each lock edge bows slightly outward
-    d += ` Q${f((px + vx) / 2 - 5)} ${f((py + vy) / 2 + 3)} ${vx} ${vy} Q${f((vx + tx) / 2 + 5)} ${f((vy + ty) / 2 + 3)} ${tx} ${ty}`;
-  }
-  return d + ' Z';
-})();
-document.querySelectorAll('.faceD').forEach(el => el.setAttribute('d', FACE_D));
-document.querySelectorAll('.bangsD').forEach(el => el.setAttribute('d', BANGS_D));
-document.getElementById('hairBackPath').setAttribute('d', HAIR_BACK_D);
-
-const INK = '#1c1433';
-function eyeShape(cx, cy, side, p, blink) {
-  // side: -1 left eye (inner corner is +x), +1 right eye (inner corner is -x)
-  const rx = 22 * p.wide, ry = 16 * p.wide;
-  const open = Math.max(0, p.open * blink);
-  const Lx = cx - rx, Rx = cx + rx, lift = 4;
-  const Ly = cy - (side < 0 ? lift : 0), Ry = cy - (side > 0 ? lift : 0);
-  const topY = cy + 6 - (ry * 1.33 + 6) * open;
-  const tIn = p.tilt, tOut = -p.tilt * .35;
-  const tL = side < 0 ? tOut : tIn, tR = side < 0 ? tIn : tOut;
-  const w = Rx - Lx;
-  const upper = `M${f(Lx)} ${f(Ly)} C${f(Lx + w * .25)} ${f(topY + tL)} ${f(Lx + w * .75)} ${f(topY + tR)} ${f(Rx)} ${f(Ry)}`;
-  const o1 = Math.min(1, open);
-  const botY = cy + 6 - 6 * o1 + ry * 1.0 * o1 * (1 - p.under * .7);
-  const lowerC = `C${f(Lx + w * .75)} ${f(botY)} ${f(Lx + w * .25)} ${f(botY)} ${f(Lx)} ${f(Ly)}`;
-  const lower = `M${f(Rx)} ${f(Ry)} ${lowerC}`;
-  return { upper, lower, full: `${upper} ${lowerC} Z`, rx, ry, open, Lx, Rx, Ly, Ry, botY };
-}
-
-function eyeSVG(cx, cy, side, p, blink, key) {
-  const ox = cx + side * 21;
-  if (p.type === 'happy') {
-    return `<path d="M${cx - 19} ${cy + 5} Q${cx} ${cy - 15} ${cx + 19} ${cy + 5}" fill="none" stroke="${INK}" stroke-width="4.2" stroke-linecap="round"/>
-      <path d="M${ox - side} ${cy + 4} l${side * 7} -4" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/>
-      <path d="M${cx - 9} ${cy + 10} Q${cx} ${cy + 7} ${cx + 9} ${cy + 10}" fill="none" stroke="${INK}" stroke-width="1.2" opacity=".4" stroke-linecap="round"/>`;
-  }
-  if (p.type === 'heart') {
-    const k = 1.35 + .08 * Math.sin(performance.now() / 160);
-    return `<g transform="translate(${cx} ${cy}) scale(${f(k)})"><path d="M0 9 C-14 -1 -12 -12 -5 -12 C-2 -12 0 -9 0 -7 C0 -9 2 -12 5 -12 C12 -12 14 -1 0 9 Z" fill="#ff4f7b" stroke="#a81f45" stroke-width="1.3"/><ellipse cx="-5" cy="-7" rx="2.4" ry="1.6" fill="#fff" opacity=".9"/></g>`;
-  }
-  if (p.type === 'star') {
-    const pts = []; for (let i = 0; i < 10; i++) { const r = i % 2 ? 6.5 : 16, a = -Math.PI / 2 + i * Math.PI / 5; pts.push(`${f(cx + r * Math.cos(a))},${f(cy + r * Math.sin(a))}`); }
-    return `<polygon points="${pts.join(' ')}" fill="#ffd45a" stroke="#b97d0c" stroke-width="1.5" stroke-linejoin="round"/><circle cx="${cx - 4}" cy="${cy - 4}" r="2" fill="#fff"/>`;
-  }
-  const s = eyeShape(cx, cy, side, p, blink);
-  const oy = side < 0 ? s.Ly : s.Ry, cornerX = side < 0 ? s.Lx : s.Rx;
-  const flick = `<path d="M${f(cornerX)} ${f(oy)} q${side * 6} -2 ${side * 10} -8" fill="none" stroke="${INK}" stroke-width="2.6" stroke-linecap="round"/>
-    <path d="M${f(cornerX)} ${f(oy + 1)} q${side * 5} 1 ${side * 9} -2" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linecap="round"/>`;
-  if (s.open < .06) {
-    return `<path d="${s.upper}" fill="none" stroke="${INK}" stroke-width="4" stroke-linecap="round"/>${flick}`;
-  }
-  const ix = cx + p.lx * 7, iy = cy + p.ly * 5 + 1;
-  const irx = 12.5 * p.iris * p.wide, iry = 16 * p.iris * p.wide, sh = p.shine;
-  const id = 'clip' + key;
-  // dash + offset (never a zero-length leading dash: with round caps it paints a dot)
-  const outerHalf = `stroke-dasharray="55 60" stroke-dashoffset="${side < 0 ? 0 : -45}"`;
-  const lowerOuter = `stroke-dasharray="38 70" stroke-dashoffset="${side < 0 ? -62 : 0}"`;
-  const crease = `stroke-dasharray="60 50" stroke-dashoffset="${side < 0 ? -15 : -25}"`;
-  return `<clipPath id="${id}"><path d="${s.full}"/></clipPath>
-    <path d="${s.full}" fill="#fdfbff"/>
-    <g clip-path="url(#${id})">
-      <ellipse cx="${f(ix)}" cy="${f(iy)}" rx="${f(irx)}" ry="${f(iry)}" fill="url(#gIris)"/>
-      <ellipse cx="${f(ix)}" cy="${f(iy - iry * .12)}" rx="${f(irx * .66)}" ry="${f(iry * .64)}" fill="#14204f" opacity=".5"/>
-      <ellipse cx="${f(ix)}" cy="${f(iy - iry * .05)}" rx="${f(irx * .34)}" ry="${f(iry * .42)}" fill="#0b0c26"/>
-      <ellipse cx="${f(ix)}" cy="${f(iy + iry * .55)}" rx="${f(irx * .62)}" ry="${f(iry * .26)}" fill="#c4fdff" opacity=".7"/>
-      <ellipse cx="${f(ix)}" cy="${f(iy)}" rx="${f(irx)}" ry="${f(iry)}" fill="none" stroke="#121740" stroke-width="1.6"/>
-      <path d="${s.upper}" fill="none" stroke="#8f86c4" stroke-width="10" opacity=".42"/>
-      <ellipse cx="${f(ix - irx * .38)}" cy="${f(iy - iry * .36)}" rx="${f(3.8 * sh)}" ry="${f(4.8 * sh)}" fill="#fff"/>
-      <circle cx="${f(ix + irx * .45)}" cy="${f(iy + iry * .28)}" r="${f(1.9 * sh)}" fill="#fff"/>
-      <circle cx="${f(ix - irx * .05)}" cy="${f(iy + iry * .6)}" r="1" fill="#fff" opacity=".85"/>
-    </g>
-    ${s.open > .4 ? `<path d="${s.upper}" transform="translate(0 -6)" pathLength="100" ${crease} fill="none" stroke="${INK}" stroke-width="1.1" opacity=".35" stroke-linecap="round"/>` : ''}
-    <path d="${s.upper}" fill="none" stroke="${INK}" stroke-width="1.4" stroke-linecap="round"/>
-    <path d="${s.upper}" pathLength="100" stroke-dasharray="90 20" stroke-dashoffset="${side < 0 ? 0 : -10}" fill="none" stroke="${INK}" stroke-width="3.6"/>
-    <path d="${s.upper}" pathLength="100" ${outerHalf} fill="none" stroke="${INK}" stroke-width="6.2" stroke-linecap="round"/>
-    ${flick}
-    <path d="${s.lower}" pathLength="100" ${lowerOuter} fill="none" stroke="${INK}" stroke-width="1.5" opacity=".75" stroke-linecap="round"/>`;
-}
-
-function browSVG(inX, outX, y, dIn, dOut) {
-  const iy = y + dIn, oy = y + dOut;
-  const mx = (inX + outX) / 2, my = (iy + oy) / 2 - 4;
-  return `<path d="M${outX} ${f(oy)} Q${mx} ${f(my)} ${inX} ${f(iy)}" fill="none" stroke="#3a2f6e" stroke-width="3.2" stroke-linecap="round"/>`;
-}
-
-function mouthSVG(m, talk, t, level = null) {
-  const X = 200, Y = 261;
-  let type = m.type, o = m.o, w = m.w * .78, c = m.c;
-  if (talk > 0) {
-    const flap = (level != null ? level : Math.max(0, .5 + .5 * Math.sin(t * 19) * Math.sin(t * 7.3 + 1))) * talk;
-    if (type === 'curve') { o = Math.max(o, .15) + flap * .55; }
-    else if (type === 'o') { o = o + flap * .4; }
-    else { type = 'curve'; c = .35; o = .15 + flap * .6; w = 10; }
-  }
-  if (type === 'o') {
-    const ry = 3 + o * 8, rx = w * (.65 + o * .12);
-    return `<ellipse cx="${X}" cy="${Y + 2}" rx="${f(rx)}" ry="${f(ry)}" fill="#7a2337" stroke="#9e4350" stroke-width="2"/><ellipse cx="${X}" cy="${f(Y + 2 + ry * .5)}" rx="${f(rx * .6)}" ry="${f(ry * .35)}" fill="#e07a86"/>`;
-  }
-  if (type === 'cat') {
-    return `<path d="M${X - w} ${Y - 3} Q${X - w / 2} ${Y + 6} ${X} ${Y - 1} Q${X + w / 2} ${Y + 6} ${X + w} ${Y - 3}" fill="none" stroke="#9e4350" stroke-width="2.6" stroke-linecap="round"/>`;
-  }
-  if (type === 'wave') {
-    const s = w / 3; let d = `M${X - w} ${Y}`;
-    for (let i = 0; i < 6; i++) d += ` Q${f(X - w + s * i + s / 2)} ${Y + (i % 2 ? 4 : -4)} ${f(X - w + s * (i + 1))} ${Y}`;
-    return `<path d="${d}" fill="none" stroke="#9e4350" stroke-width="2.4" stroke-linecap="round"/>`;
-  }
-  if (type === 'pressed') {
-    return `<path d="M${X - w} ${f(Y - 1 + m.a * 3)} Q${X} ${Y + 4} ${X + w} ${f(Y - 3 - m.a * 3)}" fill="none" stroke="#9e4350" stroke-width="3.2" stroke-linecap="round"/><path d="M${X - w - 3} ${Y - 2} l3 2 M${X + w + 3} ${Y - 5} l-3 2" stroke="#d99b84" stroke-width="1.5"/>`;
-  }
-  const Lx = X - w, Rx = X + w;
-  const Ly = Y - c * 6 + m.a * 5, Ry = Y - c * 6 - m.a * 5;
-  const up = Y + c * 6 - o * 3, lo = Y + c * 6 + o * 22;
-  if (o < .06) {
-    return `<path d="M${f(Lx)} ${f(Ly)} Q${X} ${f(up)} ${f(Rx)} ${f(Ry)}" fill="none" stroke="#9e4350" stroke-width="2.6" stroke-linecap="round"/>`;
-  }
-  const d = `M${f(Lx)} ${f(Ly)} Q${X} ${f(up)} ${f(Rx)} ${f(Ry)} Q${X} ${f(lo)} ${f(Lx)} ${f(Ly)} Z`;
-  const teeth = m.teeth && o > .2 ? `<rect x="${f(Lx)}" y="${f(Math.min(Ly, Ry) - 6)}" width="${f(w * 2)}" height="${f((up + 6) - Math.min(Ly, Ry) + 4)}" fill="#fff" clip-path="url(#mclip)"/>` : '';
-  const tongue = o > .3 ? `<ellipse cx="${X}" cy="${f((up + lo) / 2 + o * 4)}" rx="${f(w * .55)}" ry="${f(o * 5)}" fill="#e07a86" clip-path="url(#mclip)"/>` : '';
-  return `<clipPath id="mclip"><path d="${d}"/></clipPath><path d="${d}" fill="#7a2337"/>${teeth}${tongue}<path d="${d}" fill="none" stroke="#9e4350" stroke-width="2.2" stroke-linejoin="round"/>`;
-}
-
-function blushSVG(b) {
-  const hatch = Math.max(0, (b - .35) * 1.4);
-  return `<ellipse cx="152" cy="240" rx="16" ry="6.5" fill="#ff8fab" opacity="${f(b * .6)}"/><ellipse cx="248" cy="240" rx="16" ry="6.5" fill="#ff8fab" opacity="${f(b * .6)}"/>
-    <path d="M144 243 l4 -6 M150 244 l4 -6 M156 244 l4 -6 M240 244 l4 -6 M246 244 l4 -6 M252 243 l4 -6" stroke="#f0607f" stroke-width="1.3" stroke-linecap="round" opacity="${f(hatch)}"/>`;
-}
+const XLINK = 'http://www.w3.org/1999/xlink';
+const setHref = (el, url) => { el.setAttribute('href', url); el.setAttributeNS(XLINK, 'xlink:href', url); };
+const artUrl = name => `art/${name}.webp`;
+// warm the cache so expression swaps are instant
+const preload = [...ART.map(artUrl), artUrl('blink-l'), artUrl('blink-r'), artUrl('mouth-open')].map(u => { const im = new Image(); im.src = u; return im; });
+setHref($('blinkL'), artUrl('blink-l')); setHref($('blinkR'), artUrl('blink-r')); setHref($('mouthOpen'), artUrl('mouth-open'));
 
 const FX = {
   anger: `<g class="fx-pulse" transform="translate(258 128)"><path d="M-10 -3 Q-4 -3 -3 -10 M3 -10 Q4 -3 10 -3 M10 3 Q4 3 3 10 M-3 10 Q-4 3 -10 3" fill="none" stroke="#ff4d5e" stroke-width="3.2" stroke-linecap="round"/></g>`,
@@ -519,78 +336,61 @@ const FX = {
   blushLines: `<g stroke="#ff7d9a" stroke-width="1.8" stroke-linecap="round" opacity=".8"><path d="M146 236 l5 -7 M153 237 l5 -7 M160 238 l5 -7 M236 238 l5 -7 M243 237 l5 -7 M250 236 l5 -7"/></g>`,
 };
 
-// numeric state for interpolation
-const NUM = { eye: ['open', 'wide', 'lx', 'ly', 'tilt', 'under', 'iris', 'shine'], brow: ['li', 'lo', 'ri', 'ro'], mouth: ['w', 'c', 'o', 'a'] };
-function resolve(e) {
-  return {
-    eyeL: { ...e.eye, ...(e.eyeL || {}) }, eyeR: { ...e.eye, ...(e.eyeR || {}) },
-    brow: { ...e.brow }, mouth: { ...e.mouth }, blush: e.blush, tilt: e.tilt, headY: e.headY, shake: e.shake
-  };
-}
-let target = resolve(BY_ID.neutral), cur = structuredClone(target);
-let currentId = 'neutral';
-let talk = 0, talkTarget = 0;
+let current = BY_ID.smile, shownImg = null, front = $('baseA'), back = $('baseB');
+let tilt = 0, shake = 0, talk = 0, talkTarget = 0;
 let nextBlink = performance.now() + 2500, blinkStart = -1;
-let saccade = { x: 0, y: 0, next: 0 };
+const show = (el, on) => { el.style.opacity = on ? 1 : 0; };
 
 function setExpression(id) {
   const e = BY_ID[id]; if (!e) return;
-  currentId = id; target = resolve(e);
-  for (const side of ['eyeL', 'eyeR']) cur[side].type = target[side].type;
-  cur.mouth.type = target.mouth.type; cur.mouth.teeth = target.mouth.teeth;
+  current = e;
+  if (e.img !== shownImg) {
+    if (shownImg === null) { setHref(front, artUrl(e.img)); }
+    else { setHref(back, artUrl(e.img)); show(back, true); show(front, false); [front, back] = [back, front]; }
+    shownImg = e.img;
+  }
   fxG.innerHTML = e.fx.map(k => FX[k]).join('');
   $('chip').innerHTML = `表情 · <b>${e.name}</b>`;
   document.querySelectorAll('.expr').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === id));
 }
 
 function step(now) {
-  const k = 0.16;
-  for (const side of ['eyeL', 'eyeR']) for (const n of NUM.eye) cur[side][n] = lerp(cur[side][n], target[side][n], k);
-  for (const n of NUM.brow) cur.brow[n] = lerp(cur.brow[n], target.brow[n], k);
-  for (const n of NUM.mouth) cur.mouth[n] = lerp(cur.mouth[n], target.mouth[n], k);
-  for (const n of ['blush', 'tilt', 'headY', 'shake']) cur[n] = lerp(cur[n], target[n], k * .7);
+  tilt = lerp(tilt, current.tilt, .08);
+  shake = lerp(shake, current.shake, .1);
   talk = lerp(talk, talkTarget, .25);
+  const t = now / 1000;
 
-  // blink
-  let blink = 1;
+  // blink: close both eyes for ~140 ms every few seconds
+  let blinking = false;
   if (now > nextBlink && blinkStart < 0) blinkStart = now;
   if (blinkStart >= 0) {
-    const p = (now - blinkStart) / 150;
-    blink = p < .5 ? 1 - p * 2 : (p - .5) * 2;
-    if (p >= 1) { blinkStart = -1; blink = 1; nextBlink = now + 2200 + Math.random() * 3200; }
+    blinking = now - blinkStart < 140;
+    if (!blinking) { blinkStart = -1; nextBlink = now + 2200 + Math.random() * 3200; }
   }
-  // micro eye movement
-  if (now > saccade.next) { saccade = { x: (Math.random() - .5) * .25, y: (Math.random() - .5) * .15, next: now + 900 + Math.random() * 1800 }; }
-  const eL = { ...cur.eyeL, lx: cur.eyeL.lx + saccade.x, ly: cur.eyeL.ly + saccade.y };
-  const eR = { ...cur.eyeR, lx: cur.eyeR.lx + saccade.x, ly: cur.eyeR.ly + saccade.y };
+  const canBlink = CAN_BLINK.has(current.img);
+  show($('blinkR'), canBlink && (blinking || current.wink));
+  show($('blinkL'), canBlink && blinking);
 
-  const t = now / 1000;
-  featuresG.innerHTML =
-    browSVG(186, 148, 182, cur.brow.li, cur.brow.lo) + browSVG(214, 252, 182, cur.brow.ri, cur.brow.ro) +
-    eyeSVG(166, 211, -1, eL, blink, 'L') + eyeSVG(234, 211, 1, eR, blink, 'R') +
-    mouthSVG(cur.mouth, talk, t, voLevel());
-  blushG.innerHTML = blushSVG(cur.blush);
+  // lip sync: open mouth while the recorded line is loud enough
+  const level = voLevel();
+  const open = talk > .3 && CAN_TALK.has(current.img) &&
+    (level != null ? level > .3 : Math.sin(t * 17) * Math.sin(t * 6.1 + 1) > 0);
+  show($('mouthOpen'), open);
 
-  const breath = Math.sin(t * 1.6) * 1.6;
-  const sway = Math.sin(t * .7) * 1.5 + (talk > .1 ? Math.sin(t * 3.1) * 1.2 : 0);
-  const jitter = cur.shake > .05 ? Math.sin(t * 40) * cur.shake * 1.4 : 0;
-  const head = `translate(${f(jitter)} ${f(cur.headY + breath * .6)}) rotate(${f(cur.tilt + sway)} 200 285)`;
-  headG.setAttribute('transform', head);
-  hairBackG.setAttribute('transform', head);
-  bodyG.setAttribute('transform', `translate(0 ${f(breath * .4)})`);
+  const breath = Math.sin(t * 1.6) * 1.2;
+  const sway = Math.sin(t * .7) * .6 + (talk > .1 ? Math.sin(t * 3.1) * .5 : 0);
+  const jitter = shake > .05 ? Math.sin(t * 40) * shake * 1.2 : 0;
+  actorWrap.setAttribute('transform', `translate(${f(jitter)} ${f(breath)}) rotate(${f(tilt * .5 + sway)} 200 470)`);
   requestAnimationFrame(step);
 }
 
 // ---------- expression gallery thumbnails ----------
 function thumb(e) {
-  const r = resolve(e);
-  return `<svg viewBox="122 140 156 150" aria-hidden="true">
-    <path d="${FACE_D}" fill="#fbe0d2" stroke="#b97a6b" stroke-width="1.4"/>
-    ${blushSVG(r.blush)}
-    ${browSVG(186, 148, 182, r.brow.li, r.brow.lo)}${browSVG(214, 252, 182, r.brow.ri, r.brow.ro)}
-    ${eyeSVG(166, 211, -1, r.eyeL, 1, 'tL' + e.id)}${eyeSVG(234, 211, 1, r.eyeR, 1, 'tR' + e.id)}
-    ${mouthSVG(r.mouth, 0, 0).replace(/mclip/g, 'm' + e.id)}
-    <path d="${BANGS_D}" fill="#2f2866"/>
+  const fx = e.fx.map(k => FX[k]).join('').replace(/ class="fx-[^"]*"/g, '');
+  const wink = e.wink ? `<image x="858" y="316" width="144" height="126" href="${artUrl('blink-r')}"/>` : '';
+  return `<svg viewBox="138 104 124 124" aria-hidden="true">
+    <g transform="translate(-64.7 62) scale(0.3133)"><image width="1664" height="1560" href="${artUrl(e.img)}"/>${wink}</g>
+    <g transform="translate(200 181.5) scale(0.78) translate(-200 -211)">${fx}</g>
   </svg>`;
 }
 $('exprGrid').innerHTML = EXPR.map(e => `<button class="expr" data-id="${e.id}" aria-pressed="false">${thumb(e)}<span>${e.name}</span><small>${e.en}</small></button>`).join('');
